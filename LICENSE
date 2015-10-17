@@ -1,3 +1,9 @@
+The TrueSkill Ranking Algorithm was originally invented at Microsoft Research Ltd.
+The article describing this algorithm can be found at 
+"http://research.microsoft.com/apps/pubs/default.aspx?id=67956". The authors of the
+paper ask for this link to be included in derived work.
+
+The source code for this library is subject to the following license:
 The MIT License (MIT)
 
 Copyright (c) 2015 Rob Bogie
