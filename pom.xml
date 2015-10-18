@@ -4,6 +4,32 @@
 	<groupId>com.github.robbiedobbie</groupId>
 	<artifactId>trueskill4j</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>TrueSkill for Java</name>
+	<description>A small and clean implementation of the TrueSkill Ranking System in java.</description>
+	<url>https://github.com/Robbiedobbie/trueskill4j</url>
+
+	<licenses>
+		<license>
+			<name>The MIT License (MIT), with a link to the original article</name>
+			<url>https://raw.githubusercontent.com/Robbiedobbie/trueskill4j/master/LICENSE</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Rob Bogie</name>
+			<email>bogie.rob@gmail.com</email>
+			<organization></organization>
+			<organizationUrl>https://github.com/Robbiedobbie</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:Robbiedobbie/trueskill4j.git</connection>
+		<developerConnection>scm:git:git@github.com:Robbiedobbie/trueskill4j.git</developerConnection>
+		<url>git@github.com:Robbiedobbie/trueskill4j.git</url>
+	</scm>
 
 	<dependencies>
 		<dependency>
@@ -12,7 +38,7 @@
 			<version>1.16.6</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Used for testing -->
 		<dependency>
 			<groupId>junit</groupId>
