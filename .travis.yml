@@ -2,6 +2,7 @@ language: java
 env:
   global:
   - SONATYPE_USERNAME=Robbiedobbie
-  - secure: liZDwD6a4lYp73//yvNn+1DJ1xyph7b5JAAZE4I/UYIHKazlFkjQaTr00JHQJILSj6wZN4HLsgs7xVVbOi1oRXCj/HhpYRfEGmlHGCSHx3+8IeTjD+3ra07IsI6BSpWFvH1dXk2QKlt6/fba9CX2eavJmNLEVQdRfcmUZC5/tDxT24dTBDz85SD37j2PNM4CW49u3iVbQ5OEct9gzCrSoGJs3r5fWeb0ErCETGmnuX3PdID/v7L4noRAKEcXp7vX05+QdmX5cHerrzycTi4stvV3aSaazxp55SjDj/5WHUc4aQxdraHun2O3SRLBVMrsmV2LwyU6SVznKt2rsSaSgtMNPMJbpZ6x/xFgBEeKiVnKvzEQJhj7XpSQW9HEX+hP/XghtTGz45QHnqmdMRb0KfhBlKPxOtJkOfIgignASbCWsjRXQ9hJcEIHMePP+qPvYe+d+y1BAp0AIPA+VuHkQPC8P2g6XGDQ1MpFplpaxcVW/4oJwq5BmCKv7A43PRXBB/tyrT9VxzYUVE3sPxQH49X7EMlbnCkuGinSBirXDbAiCZeBMBrH7Ap8Ls7OTmwqb+V6Mf6P/TrcUkj38ND2oNbov9aOBN+KU2wq7i8xU1+W7kaJ4jaTFEZEtxCpmQDk/4Ce74X99m+SSIxu7I7o87FA6XGlMot36IXyCyV93BU=
+  - secure: Rp8sXIrKANjCt/N/5b3D10e85wMuhoBQDhYDYtPsMbTlPRxKdviJbJip+9powyVIYioqDTi5T2oJevyHwyrAShaQZxRttptHfhr1PsBwGY8CWWsOGE8ddd+EjPWFhSdDmaSzLz/dIGTaqfNP32uvU2ZnEI2v8No09EeFG6qoASJvhswqvDN/wJGB9ONxmFKy6KDwIshfSYIAnxgI9T8a/O2idNdvADnukA2Ezi1Q/sliSbm4MlESt9M79fAfCfxA5HhOLpLIxbihddgIDlA1dUWNmsYvDSmc9iLKrelHRYTNAHh3VTiGoseVRiz1o0bR7DuFN2xXhasTttg+B4dVCMuPktiUxSaCQJEoy9CKnpTWYtNOYEH1LzKm+exFJcoVHJ1aToTVy799b4sWwbCrDRzr1ntQHr2MUjpzU2Snj92kPxB/gTXOEzdMbRbrFKl0Fg/0mtO2VrM3Wi2/sTCRXcDYWQdnkQhjpbKnhPD7sauCvbWEr+BFVW7niiOpQAb9L26Sy87pVlr+oiC4ezsOvOwms4JVZQVLkaKCxKRa70fumkYdE1/euv3BeJhX6gc4oWCGejamE/boK1GGZ+r0kUWgkqhssYrSPEud1BnXpauuuQhgHxIQVdqTk0VHdUkIETnlRt3QYM2gusmUBD4SAEaEwBKOjOE9xYzht6sRh94=
 after_success:
-- "[[ $TRAVIS_BRANCH == \"develop\" ]] && { python addServer.py; mvn clean deploy --settings ~/.m2/mySettings.xml; };"
+- '[[ $TRAVIS_BRANCH == "develop" ]] && { python addServer.py; mvn clean deploy --settings
+  ~/.m2/mySettings.xml; };'
