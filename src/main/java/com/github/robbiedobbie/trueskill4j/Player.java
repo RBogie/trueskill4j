@@ -18,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Player<T> {
+public class Player<T> implements Rankable{
 	/**
 	 * The identifier or reference for this player.
 	 */
