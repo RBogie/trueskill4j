@@ -5,7 +5,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 public class TrueSkillMath {
 
     /**
-     * NOrmal distribution that we use to calculate draw probability from a draw margin, and the other way around.
+     * Normal distribution that we use to calculate draw probability from a draw margin, and the other way around.
      *
      * Since no random sampling is done, we don't pass a random generator.
      */
@@ -13,9 +13,9 @@ public class TrueSkillMath {
 
     /**
      * Calculates the probability of a draw between two teams, given the amount of players in both teams.
-     * The formula is taken from page 6 of the TrueSkill technical report (MSR-TR-2006-80).
+     * The formula is taken from page 6 of the TrueSkill technical report (MSR-TR-2006-80).<br><br>
      *
-     * Formula: Draw Probability = 2\Phi \left ( \frac{\varepsilon }{\sqrt(n_1 + n_2)\beta } \right ) - 1
+     * Formula: \(Draw Probability = 2\Phi \left ( \frac{\varepsilon }{\sqrt(n_1 + n_2)\beta } \right ) - 1\)
      *
      * @param n1 Number of players on team 1
      * @param n2 Number of players on team 2
@@ -30,10 +30,11 @@ public class TrueSkillMath {
 
     /**
      * Calculates the draw margin for a game given the probability of a draw between two teams.
-     * The formula is derived from the one on page 6 of the TrueSkill technical report (MSR-TR-2006-80).
+     * The formula is derived from the one on page 6 of the TrueSkill technical report (MSR-TR-2006-80).<br><br>
      *
-     * Original formula: Draw Probability = 2\Phi \left ( \frac{\varepsilon }{\sqrt(n_1 + n_2)\beta } \right ) - 1
-     * Derived formula:  \varepsilon = \Phi^{-1} \left ( \frac{Draw Probability + 1}{2} \right ) \sqrt(n_1 + n_2)\beta
+     * Original formula: \(Draw Probability = 2\Phi \left ( \frac{\varepsilon }{\sqrt(n_1 + n_2)\beta } \right ) - 1\)
+     * <br>
+     * Derived formula:  \(\varepsilon = \Phi^{-1} \left ( \frac{Draw Probability + 1}{2} \right ) \sqrt(n_1 + n_2)\beta\)
      *
      * @param n1 Number of players on team 1
      * @param n2 Number of players on team 2
