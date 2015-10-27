@@ -3,6 +3,8 @@ env:
   global:
   - SONATYPE_USERNAME=Robbiedobbie
   - secure: Rp8sXIrKANjCt/N/5b3D10e85wMuhoBQDhYDYtPsMbTlPRxKdviJbJip+9powyVIYioqDTi5T2oJevyHwyrAShaQZxRttptHfhr1PsBwGY8CWWsOGE8ddd+EjPWFhSdDmaSzLz/dIGTaqfNP32uvU2ZnEI2v8No09EeFG6qoASJvhswqvDN/wJGB9ONxmFKy6KDwIshfSYIAnxgI9T8a/O2idNdvADnukA2Ezi1Q/sliSbm4MlESt9M79fAfCfxA5HhOLpLIxbihddgIDlA1dUWNmsYvDSmc9iLKrelHRYTNAHh3VTiGoseVRiz1o0bR7DuFN2xXhasTttg+B4dVCMuPktiUxSaCQJEoy9CKnpTWYtNOYEH1LzKm+exFJcoVHJ1aToTVy799b4sWwbCrDRzr1ntQHr2MUjpzU2Snj92kPxB/gTXOEzdMbRbrFKl0Fg/0mtO2VrM3Wi2/sTCRXcDYWQdnkQhjpbKnhPD7sauCvbWEr+BFVW7niiOpQAb9L26Sy87pVlr+oiC4ezsOvOwms4JVZQVLkaKCxKRa70fumkYdE1/euv3BeJhX6gc4oWCGejamE/boK1GGZ+r0kUWgkqhssYrSPEud1BnXpauuuQhgHxIQVdqTk0VHdUkIETnlRt3QYM2gusmUBD4SAEaEwBKOjOE9xYzht6sRh94=
+  - secure: O0SXk9HZXritK2VQsJQxL4u1cS89t8BR9CxILstY1LlXcqWB0S1N1leVhbJiW38A6NNkR7gVZdLRwONixKTJrog3lCRlMzWdSB4XOuYn/zJh6nmQCgDSWbpSYlswS/nkpPWpe1ju2WC3F4puSDegZdIk11KcLiE+6V7KJJBeS33pbtZ01NydH6i+6zwC5IZ1bCHg7F2zaimukTrr+u9hgolZtS7YonLaZhDwd770kO20tkQ3scVrgvotAxtgnOIjWXWBOtCDNxZzISl9ccs9xYbNwUqTkWz8HIKs9ezjS/NXIRzf/fkh+4VI++k0rlaH8Cvu39gnOllcp5W0iTsSL1e0mn1kLaNLj9zg150E401ShP6vGYENDiPjne9/CwiPzGtOmud+EHIIAON4j4vmYoi+PwhKW8wuAY7d6NAAqV4CiZjjEdv6qOSCBO0V+kJBkmDmjTECpwcN9idXYhG5bys6CHCpIgndh3el2maNiwWQcbFiDU9XNVVxR4uCE31QMyLbfDnPZWe88Kmi+WTZd/sKzK2L0CUpBg90EzC4SIr2xgr68kv+5yR8BnXvuX2UDRi+f/SbRKTSiNL1qD5YiaQG2vj8ccmWWdScLVRSlM6xh/7lUp/th0ONme8S5rhITYqjk0xhCd1SKJ/PoRqYHhshDzXFnGapvnBn8xkIsSo=
 after_success:
-- '[[ $TRAVIS_BRANCH == "develop" ]] && { python addServer.py; mvn clean deploy --settings
+- '[[ $TRAVIS_BRANCH == "develop" ]] && { python .travis/addServer.py; mvn clean deploy --settings
   ~/.m2/mySettings.xml; };'
+- .travis/publish-javadoc.sh

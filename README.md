@@ -12,3 +12,5 @@ The latest snapshot is available through maven:
             <artifactId>trueskill4j</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+Documentation can be found [here](http://robbiedobbie.github.io/trueskill4j/).
