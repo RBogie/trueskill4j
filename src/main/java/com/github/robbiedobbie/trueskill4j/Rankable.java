@@ -2,5 +2,6 @@ package com.github.robbiedobbie.trueskill4j;
 
 
 public interface Rankable {
-    public TrueSkillRanking.Rating getRating();
+    public Rating getRating();
+    public void setRating(Rating r);
 }

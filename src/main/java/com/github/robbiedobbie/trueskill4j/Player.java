@@ -1,7 +1,5 @@
 package com.github.robbiedobbie.trueskill4j;
 
-import com.github.robbiedobbie.trueskill4j.TrueSkillRanking.Rating;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,10 +8,9 @@ import lombok.experimental.FieldDefaults;
 /**
  * Represents a player in the ranking.
  * 
- * @author Rob Bogie
+ * @author Rob Bogie (bogie.rob@gmail.com
  *
- * @param <T>
- *            The type of the incorporated data (Normally an id or a reference to some identifying class)
+ * @param <T> The type of the incorporated data (Normally an id or a reference to some identifying class)
  */
 @Data
 @FieldDefaults(level = AccessLevel.PROTECTED)
@@ -25,7 +22,7 @@ public class Player<T> implements Rankable{
 	final T id;
 
 	/**
-	 * The current rating this player has
+	 * The current rating this player has.
 	 */
 	Rating rating;
 	

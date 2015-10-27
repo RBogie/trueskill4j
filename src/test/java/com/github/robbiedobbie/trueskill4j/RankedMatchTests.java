@@ -9,7 +9,9 @@ public class RankedMatchTests{
 		Player<Integer> player1 = new Player<Integer>(1);
 		Player<Integer> player2 = new Player<Integer>(2);
 		
-		TrueSkillRanking ranking = new TrueSkillRanking();
+		TrueSkillRanking ranking = TrueSkillRanking.builder()
+				.drawProbability(0.0)
+				.build();
 		ranking.addPlayer(player1);
 		ranking.addPlayer(player2);
 	}

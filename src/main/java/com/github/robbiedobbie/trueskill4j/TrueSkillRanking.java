@@ -1,43 +1,18 @@
 package com.github.robbiedobbie.trueskill4j;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * This class is responsible for managing a ranking pool with the TrueSkill ranking algorithm.
+ *
+ * @author Rob Bogie (bogie.rob@gmail.com)
+ */
 public class TrueSkillRanking {
-	public static final double DRAW_PROBABILITY = 0;
-
-	@Getter
-	@FieldDefaults(level = AccessLevel.PROTECTED)
-	@AllArgsConstructor
-	public static class Rating {
-		public static final double DEFAULT_MEAN = 25;
-		public static final double DEFAULT_STANDARD_DEVIATION = 8.3;
-		public static final double CONSERVATIVE_ESTIMATE_RATIO = 3;
-		
-		/**
-		 * The mean value (μ) of the current rating of the player
-		 */
-		double mean;
-		/**
-		 * The standard deviation (σ) of the rating of the player
-		 */
-		double standardDeviation;
-		
-		public Rating() {
-			this(DEFAULT_MEAN, DEFAULT_STANDARD_DEVIATION);
-		}
-
-		public double getTrueSkillEstimate() {
-			return mean - CONSERVATIVE_ESTIMATE_RATIO * standardDeviation;
-		}
-	}
 
 	private static Comparator<Rankable> rankableComparator = new Comparator<Rankable>() {
 		public int compare(Rankable rankable, Rankable t1) {
@@ -55,7 +30,27 @@ public class TrueSkillRanking {
 		}
 	};
 
+	public final double drawProbability;
+	public final double beta;
+	/**
+	 * The amount of times you want to substract the standard deviation from the mean to get the TrueSkill estimate. In
+	 * normal TrueSkill the mean would be 25, the standard deviation would be 25/3 and this ratio would be 3. The
+	 * TrueSkill estimate would then be lower than the actual skill in 99% of the cases.
+	 */
+	public final double conservativeEstimateRatio;
+
 	Set<Rankable> players = new TreeSet<Rankable>(rankableComparator);
+
+	@Builder
+	private TrueSkillRanking(double drawProbability, double beta, double conservativeEstimateRatio) {
+		if(drawProbability < 0.0 || drawProbability > 1.0)
+			throw new IllegalArgumentException("The drawProbability should always be between 0 and 1!");
+
+		this.drawProbability = drawProbability;
+		this.beta = beta;
+		this.conservativeEstimateRatio = conservativeEstimateRatio;
+
+	}
 
 	public void addPlayer(Rankable player) {
 		players.add(player);
@@ -67,7 +62,8 @@ public class TrueSkillRanking {
 
 	public void addMatchData(List<Tuple<Rankable, Integer>> matchInfo) {
 		if(players.size() != 2) {
-			throw new RuntimeException(new UnsupportedOperationException("Library (currently) only support 1v1 matches"));
+			throw new RuntimeException(
+					new UnsupportedOperationException("Library (currently) only support 1v1 matches"));
 		}
 
 		Rankable winner = null;
@@ -89,7 +85,14 @@ public class TrueSkillRanking {
 	}
 
 	private Rating calculateNewRatingForPlayer(Rankable player, Rankable opponent, PlayStatus playStatus) {
+		Rating winner = playStatus == PlayStatus.Loss ? opponent.getRating() : player.getRating();
+		Rating loser = playStatus == PlayStatus.Loss ? player.getRating() : opponent.getRating();
 
+		Rating playerRating = player.getRating();
+
+		double drawMargin = TrueSkillMath.getDrawMargin(1, 1, beta, drawProbability);
+
+		return new Rating(playerRating.getMean(), playerRating.getStandardDeviation(), conservativeEstimateRatio);
 	}
 
 }
