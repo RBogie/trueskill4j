@@ -23,9 +23,9 @@ public class TrueSkillRanking {
                 return 0;
 
             if (r1.getTrueSkillEstimate() > r2.getTrueSkillEstimate())
-                return 1;
-            else if (r1.getTrueSkillEstimate() < r2.getTrueSkillEstimate())
                 return -1;
+            else if (r1.getTrueSkillEstimate() < r2.getTrueSkillEstimate())
+                return 1;
             return 0;
         }
     };
