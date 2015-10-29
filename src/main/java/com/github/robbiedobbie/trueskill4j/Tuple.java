@@ -24,6 +24,7 @@ public class Tuple<X, Y> {
 
     /**
      * Helper method to create a tuple without specifying generic types.
+     *
      * @return A newly created tuple containing the objects supplied.
      */
     public <X, Y> Tuple<X, Y> t(X x, Y y) {
