@@ -41,7 +41,7 @@ public class TrueSkillRanking {
 
     public final double dynamicsFactor;
 
-    Set<Rankable<?>> players = new TreeSet<Rankable<?>>(rankableComparator);
+    TreeSet<Rankable<?>> players = new TreeSet<Rankable<?>>(rankableComparator);
 
     @Builder
     private TrueSkillRanking(double drawProbability, double beta, double conservativeEstimateRatio, double dynamicsFactor) {
@@ -58,6 +58,10 @@ public class TrueSkillRanking {
         if(player.getRating() == null)
             player.setRating(new Rating());
         players.add(player);
+    }
+
+    public TreeSet<Rankable<?>> getPlayers() {
+        return players;
     }
 
     public <T> boolean managesPlayer(Rankable<T> player) {
