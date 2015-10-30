@@ -11,22 +11,6 @@ import java.util.*;
  */
 public class TrueSkillRanking {
 
-    private static Comparator<Rankable<?>> rankableComparator = new Comparator<Rankable<?>>() {
-        public int compare(Rankable<?> rankable, Rankable<?> t1) {
-            Rating r1 = rankable.getRating();
-            Rating r2 = t1.getRating();
-
-            if (rankable == t1) //Same object is always equal
-                return 0;
-
-            if (r1.getTrueSkillEstimate() > r2.getTrueSkillEstimate())
-                return -1;
-            else if (r1.getTrueSkillEstimate() < r2.getTrueSkillEstimate())
-                return 1;
-            return 0;
-        }
-    };
-
     public final double drawProbability;
     public final double beta;
     /**
@@ -38,7 +22,7 @@ public class TrueSkillRanking {
 
     public final double dynamicsFactor;
 
-    TreeSet<Rankable<?>> players = new TreeSet<Rankable<?>>(rankableComparator);
+    Set<Rankable> players = new HashSet<Rankable>();
 
     @Builder
     private TrueSkillRanking(double drawProbability, double beta, double conservativeEstimateRatio, double dynamicsFactor) {
@@ -51,28 +35,40 @@ public class TrueSkillRanking {
         this.dynamicsFactor = dynamicsFactor;
     }
 
-    public <T> void addPlayer(Rankable<T> player) {
+    public void addPlayer(Rankable player) {
         if(player.getRating() == null)
             player.setRating(new Rating());
         players.add(player);
     }
 
-    public TreeSet<Rankable<?>> getPlayers() {
-        return players;
+    public List<Rankable> getRanking() {
+        List<Rankable> ranking = new ArrayList<Rankable>((Set)players);
+        Collections.sort(ranking, new Comparator<Rankable>() {
+            public int compare(Rankable rankable, Rankable t1) {
+                double val = t1.getRating().getTrueSkillEstimate() - rankable.getRating().getTrueSkillEstimate();
+                if(val > 0) {
+                    return 1;
+                } else if(val < 0) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+        return ranking;
     }
 
-    public <T> boolean managesPlayer(Rankable<T> player) {
+    public boolean managesPlayer(Rankable player) {
         return players.contains(player);
     }
 
-    public <T> void addMatchData(List<Tuple<Rankable<T>, Integer>> matchInfo) {
+    public void addMatchData(List<Tuple<Rankable, Integer>> matchInfo) {
         if (matchInfo.size() != 2) {
             throw new RuntimeException(
                     new UnsupportedOperationException("Library (currently) only support 1v1 matches"));
         }
 
-        Collections.sort(matchInfo, new Comparator<Tuple<Rankable<T>, Integer>>() {
-            public int compare(Tuple<Rankable<T>, Integer> t1, Tuple<Rankable<T>, Integer> t2) {
+        Collections.sort(matchInfo, new Comparator<Tuple<Rankable, Integer>>() {
+            public int compare(Tuple<Rankable, Integer> t1, Tuple<Rankable, Integer> t2) {
                 return t1.getY() - t2.getY();
             }
         });
@@ -120,7 +116,7 @@ public class TrueSkillRanking {
      * @param playStatus Whether player won, lost or had a tie
      * @return The new rating for player.
      */
-    public <T> Rating calculateNewRatingForPlayer(Rankable<T> player, Rankable<T> opponent, PlayStatus playStatus) {
+    public Rating calculateNewRatingForPlayer(Rankable player, Rankable opponent, PlayStatus playStatus) {
         Rating winner = playStatus == PlayStatus.Loss ? opponent.getRating() : player.getRating();
         Rating loser = playStatus == PlayStatus.Loss ? player.getRating() : opponent.getRating();
 

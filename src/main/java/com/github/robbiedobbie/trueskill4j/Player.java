@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Player<T extends Comparable<T>> implements Rankable<Player<T>> {
+public class Player<T extends Comparable<T>> implements Rankable {
     /**
      * The identifier or reference for this player.
      */
@@ -32,9 +32,5 @@ public class Player<T extends Comparable<T>> implements Rankable<Player<T>> {
      */
     public Player(T id) {
         this(id, new Rating());
-    }
-
-    public int compareTo(Player<T> o) {
-        return id.compareTo(o.id);
     }
 }
