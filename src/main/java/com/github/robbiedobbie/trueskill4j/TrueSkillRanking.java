@@ -2,10 +2,7 @@ package com.github.robbiedobbie.trueskill4j;
 
 import lombok.Builder;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * This class is responsible for managing a ranking pool with the TrueSkill ranking algorithm.
@@ -74,26 +71,24 @@ public class TrueSkillRanking {
                     new UnsupportedOperationException("Library (currently) only support 1v1 matches"));
         }
 
-        Rankable winner = null;
-        Rankable loser = null;
-        int scoreBestPlayerFound = Integer.MAX_VALUE;
-        //TODO: Hackish but will do actual sorting when implementing draws.
-        for (Tuple<Rankable<T>, Integer> tuple : matchInfo) {
-            if (tuple.getY() < scoreBestPlayerFound) {
-                scoreBestPlayerFound = tuple.getY();
-                winner = tuple.getX();
-            } else {
-                loser = tuple.getX();
+        Collections.sort(matchInfo, new Comparator<Tuple<Rankable<T>, Integer>>() {
+            public int compare(Tuple<Rankable<T>, Integer> t1, Tuple<Rankable<T>, Integer> t2) {
+                return t1.getY() - t2.getY();
             }
-        }
+        });
+
+        Rankable winner = matchInfo.get(0).getX();
+        Rankable loser = matchInfo.get(1).getX();
+
+        boolean wasDraw = matchInfo.get(0).getY() == matchInfo.get(1).getY();
 
         //Remove them for the list, so that they will be added with new values, and sorted accordingly.
         players.remove(winner);
         players.remove(loser);
 
         //Calculate new ratings, but don't yet store them. It would influence the calculations for the other player.
-        Rating winnerRating = calculateNewRatingForPlayer(winner, loser, PlayStatus.Win);
-        Rating loserRating = calculateNewRatingForPlayer(loser, winner, PlayStatus.Loss);
+        Rating winnerRating = calculateNewRatingForPlayer(winner, loser, wasDraw ? PlayStatus.Draw : PlayStatus.Win);
+        Rating loserRating = calculateNewRatingForPlayer(loser, winner, wasDraw ? PlayStatus.Draw : PlayStatus.Loss);
 
         winner.setRating(winnerRating);
         loser.setRating(loserRating);
@@ -103,7 +98,7 @@ public class TrueSkillRanking {
     }
 
     private enum PlayStatus {
-        Win, Loss, Draw;
+        Win, Loss, Draw
     }
 
     /**
