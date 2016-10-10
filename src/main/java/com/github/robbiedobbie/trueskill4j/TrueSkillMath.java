@@ -98,10 +98,11 @@ public class TrueSkillMath {
      * The w function as described in the TrueSkill technical report (MSR-TR-2006-80) at page 4.
      * <br><br>
      * The formula when the game was not a draw:
-     * $$$$<br>
+     * $$V(t, \varepsilon) (V(t, \varepsilon) + t - \varepsilon)$$<br>
      * <p>
      * The formula when the game was a draw:
-     * $$$$
+     * $$V^2(t, \varepsilon) + \frac{(\varepsilon - t )\mathcal{N}(\varepsilon - t ) + (\varepsilon + t )\mathcal{N}(\varepsilon + t )}
+     * {\Phi(\varepsilon - t) - \Phi(- \varepsilon - t)}$$
      *
      * @param deltaMean  The difference in mean between the winner and the loser. (μWinner - μloser)
      * @param drawMargin The draw margin for the game
